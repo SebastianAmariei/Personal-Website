@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import LandingPage from "./Pages/LandingPage"
+import TextGame from "./Pages/TextGame"
+import ExaminationApp from "./Pages/ExaminationApplication"
+import WeatherApp from "./Pages/WeatherApplication"
+import QuizApp from "./Pages/WebQuiz"
+
 
 function App() {
+
+  const [height, setHeight] = React.useState(0);
+
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setHeight(position)
+  }
+
+  console.log(height)
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+
+  console.log(height)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage height={height} />} />
+          <Route path="/TextGame" element={<TextGame />} />
+          <Route path="/Examination" element={<ExaminationApp />} />
+          <Route path="/Weather" element={<WeatherApp />} />
+          <Route path="/Quiz" element={<QuizApp />} />
+
+        </Routes>
+      </Router>
+
+
   );
 }
 
